@@ -19,11 +19,8 @@ var _getRandomByte = function generate() {
   // return result[0];
 };
 
-
 var generatePassword = function () {
   var length = localStorage.getItem("name");
- 
-
   _pattern = getpt();
   console.log(_pattern);
   return Array.apply(null, { 'length': length })
@@ -31,7 +28,6 @@ var generatePassword = function () {
       var result;
       while (true) {
         result = String.fromCharCode(this._getRandomByte());
-
         if (this._pattern.test(result))
         
         {
@@ -59,50 +55,56 @@ function writePassword() {
   }
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
-
   passwordText.value = password;
-
-
 }
 var getPlayerName = function () {
   var name = "";
-
-
   leng = prompt("Enter length of character? Not more than 128 characters");
-
-  console.log("Your choice  is " + leng);
-  localStorage.setItem("name", leng);
-  return name;
+   while (isNaN(leng))
+   leng = prompt("Enter length of character? Not more than 128 characters");
+   while(leng>128)
+   leng = prompt("Enter length of character? Not more than 128 characters");
+   localStorage.setItem("name", leng);
+       return name;
 };
 
 var getlowercase = function () {
   var lc = "";
-
-
   lc = prompt("Do you like to have lower case? Enter yes or no");
+ 
+  while(lc.toLowerCase() !="yes" && lc.toLowerCase()!="no"  ){
+    
+  lc = prompt("Do you like to have lower case? Enter yes or no");
+  }
+ 
+ 
   localStorage.setItem("lc", lc);
-  console.log("Your choice  is " + lc);
+  
   return lc;
 };
 
 var getnum = function () {
   var num = "";
-
-  while (num === "" || num === null) {
-    num = prompt("Do you like to have numeric? Enter yes or no");
+  num = prompt("Do you like to have numeric? Enter yes or no");
+  while(num.toLowerCase() !="yes" && num.toLowerCase()!="no"  ){
+   num = prompt("Do you like to have numeric? Enter yes or no");
   }
-  localStorage.setItem("num", num);
-  console.log("Your choice  is " + num);
+ 
+   localStorage.setItem("num", num);
+ 
   return num;
 };
 var getspec = function () {
   var spec = "";
-
-  while (spec === "" || spec === null) {
+  spec = prompt("Do you like to have special character? Enter yes or no");
+  while(spec.toLowerCase() !="yes" && spec.toLowerCase()!="no"  ){
+    
     spec = prompt("Do you like to have special character? Enter yes or no");
-  }
+   }
+
+ 
   localStorage.setItem("spec", spec);
-  console.log("Your choice  is " + spec);
+ 
   return spec;
 };
 var getpt = function () {
@@ -111,6 +113,8 @@ var getpt = function () {
   var lc = localStorage.getItem("lc")
 
   var _pattern = /[a-zA-Z0-9_\-\+\.]/;
+ 
+
   if (lc === "yes") {
     _pattern = /[a-zA-Z0-9_\-\+\.]/;
     if (num === "no")
@@ -130,13 +134,7 @@ var getpt = function () {
       _pattern = /[A-Z]/;
 
   }
-
-
-
-  
-  return _pattern;
+return _pattern;
 }
-
-
 generateBtn.addEventListener("click", writePassword);
 
